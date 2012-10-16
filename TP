@@ -1,0 +1,25 @@
+"""ceci est mon code"""
+import pdb
+import httplib
+import sys
+
+LOG = True
+#if len(sys.argv) > 2:
+#    LOG=True
+
+
+def logger(files, message):
+    """logger"""
+    if LOG:
+        files.write(message)
+
+pdb.set_trace()
+CONN = httplib.HTTPConnection("cache.univ-st-etienne.fr", 3128)
+CONN.request("GET", sys.argv[1])
+REPONSE = CONN.getresponse()
+PAGE = REPONSE.read()
+print "le nombre de mots dans la page est ", PAGE.count(" ") + 1
+
+FILER = open("log.txt", "a")
+logger(FILER, "statut: %s" % str(REPONSE.status) + "\n")
+FILER.close()
